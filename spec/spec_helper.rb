@@ -2,11 +2,11 @@ require 'httparty'
 require 'httparty/request'
 require 'httparty/response/headers'
 
-require_relative '../services/contatos_service.rb'
+#require_relative '../services/contatos_service.rb'
 
 RSpec.configure do |config|
 
-  include Contato
+ # include Contato
   #definindo contato como global
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

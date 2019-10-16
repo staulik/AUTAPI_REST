@@ -1,60 +1,28 @@
 Dado("que eu tenha um payload padrão") do
-    @base_url  = 'https://api-de-tarefas.herokuapp.com/users'
-    @body = 
-    {
-    "user": {
-    "email": Faker::Internet.email,
-    "password": :@password,
-    "password_confirmation": :@password
-     }    
-}.to_json
-
-@headers = {
-             "Accept": 'application/vnd.tasksmanager.v2',
-                      'Content-Type': 'application/json'
-}
-end
-  
-Quando("é enviada uma requisição para a criação do usuário") do
-    @request = HTTParty.post(@base_url, body: @body, headers: @headers)
+  @manter_user = CRUD.new
  end
   
-Então("o usuário é criado") do
-    expect(@request.code).to eq(201)
-    expect(@request.message).to eq("Created")
-    puts "A mensagem de sucesso é: #{@request.message} para código #{@request.code}"
-    puts @request.body
+Quando("é enviada uma requisição para a criação do usuário") do
+   @manter_user.create
+    puts "Requisição com exito: #{@manter_user.create.message} para código #{@manter_user.create.code}" 
+ end
   
-  end
+Então("são retornadas as informações da inclusão") do
+   puts @manter_user.create.body
+ end
 
-  Dado("que eu tenha o usuário cadastrado") do                                        
-      @base_url  = 'https://api-de-tarefas.herokuapp.com/users'
-      @body = 
-      {
-      "user": {
-      "email": Faker::Internet.email,
-      "password": :@password,
-      "password_confirmation": :@password
-       }    
-  }.to_json
-  
-  @headers = {
-               "Accept": 'application/vnd.tasksmanager.v2',
-                        'Content-Type': 'application/json'
-  }
-
-  @request = HTTParty.post(@base_url, body: @body, headers: @headers)
-
-  puts "O usuário" % @request.parsed_response['data']['attributes']['email'] % "foi incluído..." 
+  Dado("que eu tenha o usuário cadastrado") do 
+    @manter_user = CRUD.new
+    @manter_user.create
+    puts @manter_user.create.body
+    
   end                                                                                 
-                                                                                      
+            
   Quando("é enviada uma requisição de consulta") do                                   
-     @response = HTTParty.get('https://api-de-tarefas.herokuapp.com/contacts')
-    # @consulta = Contato.get('/contacts')
-        
-  end                                                                                 
-                                                                                     
+    @manter_user.retrieve
+    puts "Consulta processada com sucesso #{@manter_user.retrieve.code}"
+  end                                                                                
+                                                            
   Então("a API me retorna a informação do usuário") do                                
-  puts @request.parsed_response['data']['attributes']['email']  
-   
+   puts CRUD.class_variable_get(:@@request).parsed_response['data']['attributes']['email'] 
   end                                                                                 

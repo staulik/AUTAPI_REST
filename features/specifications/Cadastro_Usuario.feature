@@ -4,11 +4,11 @@ Como um aplicação de serviço
 Quero enviar requisições para Cadastro de Usuário
 para verificar se o cadastro é funciona corretamente
 
-
+@criar
 Cenario: Validar a API de criação de Usuário
 Dado que eu tenha um payload padrão
 Quando é enviada uma requisição para a criação do usuário 
-Então o usuário é criado
+Então são retornadas as informações da inclusão
 
 @consulta
 Cenario: Validar a API de consulta de Usuário

@@ -9,15 +9,16 @@ class CRUD
    include HTTParty
 
    def create  
-     
+  
+  password = Faker::Number.number(6)
+
   @@base_url  = 'https://api-de-tarefas.herokuapp.com/users'
     @@body = 
     {
     "user": {
     "email": Faker::Internet.email,
-    "password":  :@password,
-    "password_confirmation": :@password
-
+    "password": password,
+    "password_confirmation": password
      }    
 }.to_json
 
